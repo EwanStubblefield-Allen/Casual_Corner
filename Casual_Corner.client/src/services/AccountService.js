@@ -13,7 +13,7 @@ class AccountService {
       AppState.account = new Account(res.data)
       return AppState.account
     } catch (err) {
-      logger.error('HAVE YOU STARTED YOUR SERVER YET???')
+      logger.error('HAVE YOU STARTED YOUR SERVER YET???', err)
       return null
     }
   }

@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:mysql://52.10.174.136:3306/Casual_Corner
+    username: app_user
+    password: feqaggP&8k$KP@o
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate.ddl-auto: update
+    show-sql: true
+server:
+  port: 3000
+  error:
+    include-message: always
+okta:
+  oauth2:
+    issuer: https://dev-4sjhjftaw74ytohu.us.auth0.com/
+    audience: classroom.com
