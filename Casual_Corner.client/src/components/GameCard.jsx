@@ -1,8 +1,46 @@
+import React, { useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
-import React from 'react'
 import { AppState } from '../AppState.js'
+import { gamesService } from '../services/GamesService.js'
+import Pop from '../utils/Pop.js'
+
+let page = 1
 
 function GameCard() {
+  const [isLoading, setIsLoading] = useState(false)
+  const [scrollTop, setScrollTop] = useState(0)
+
+  useEffect(() => {
+    window.addEventListener('scroll', (e) =>
+      setScrollTop(e.target.documentElement.scrollTop)
+    )
+    getGames()
+  }, [])
+
+  useEffect(() => {
+    if (
+      !scrollTop ||
+      scrollTop + document.documentElement.clientHeight <
+        document.documentElement.scrollHeight - 100 ||
+      isLoading
+    ) {
+      return
+    }
+    page++
+    getGames()
+  }, [scrollTop])
+
+  async function getGames() {
+    try {
+      setIsLoading(true)
+      await gamesService.getGames('page_size=12', `page=${page}`)
+    } catch (error) {
+      Pop.error(error.message, '[GETTING GAMES]')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   function getColors(score) {
     if (score >= 75) {
       return { color: '#66CC33', backgroundColor: '#66CC3330' }
@@ -44,9 +82,10 @@ function GameCard() {
   })
 
   return (
-    <section className="row">
-      {AppState.games.length ? games : <p>No Available Games</p>}
-    </section>
+    <>
+      <section className="row">{AppState.games.length ? games : ''}</section>
+      <section className="row">{isLoading && <p>Loading...</p>}</section>
+    </>
   )
 }
 
