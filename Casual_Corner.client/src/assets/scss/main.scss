@@ -1,10 +1,10 @@
-@import "./_variables.scss";
-@import "bootstrap";
-@import "./_overrides.scss";
-@import "./_utilities.scss";
-@import "./loaders.scss";
+@import './_variables.scss';
+@import 'bootstrap';
+@import './_overrides.scss';
+@import './_utilities.scss';
+@import './loaders.scss';
 
-body{
+body {
   overscroll-behavior: none;
 }
 
@@ -17,6 +17,10 @@ body{
 
 main {
   flex-grow: 1;
+}
+
+p {
+  margin: 0;
 }
 
 a {
@@ -36,7 +40,13 @@ select {
   }
 }
 
-form:invalid button[type="submit"] {
+form:invalid button[type='submit'] {
   filter: grayscale(1);
   pointer-events: none;
+}
+
+.vh-25 {
+  height: 25vh;
+  object-fit: cover;
+  object-position: center;
 }

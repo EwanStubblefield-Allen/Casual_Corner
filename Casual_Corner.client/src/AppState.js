@@ -2,13 +2,13 @@ import { action, makeAutoObservable } from 'mobx'
 import { isValidProp } from './utils/isValidProp.js'
 
 class ObservableAppState {
-  user = null
-  /** @type {import('./models/Account.js').Account} */
-  account = null
-
   constructor() {
     makeAutoObservable(this)
   }
+  user = null
+  /** @type {import('./models/Account.js').Account} */
+  account = null
+  games = []
 }
 
 // eslint-disable-next-line no-undef
