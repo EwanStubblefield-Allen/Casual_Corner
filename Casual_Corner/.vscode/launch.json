@@ -6,12 +6,6 @@
   "configurations": [
     {
       "type": "java",
-      "name": "Current File",
-      "request": "launch",
-      "mainClass": "${file}"
-    },
-    {
-      "type": "java",
       "name": "CasualCornerApplication",
       "request": "launch",
       "mainClass": "com.Casual_Corner.CasualCornerApplication",

@@ -1,12 +1,12 @@
-import { observer } from 'mobx-react-lite'
 import React from 'react'
+import { observer } from 'mobx-react-lite'
 import { Link } from 'react-router-dom'
 import { AppState } from '../AppState.js'
 import { AuthService } from '../services/AuthService.js'
 
 function Login() {
   function login() {
-    AuthService.loginWithRedirect()
+    AuthService.loginWithPopup()
   }
 
   function logout() {
@@ -23,7 +23,7 @@ function Login() {
   )
 
   const authenticated = (
-    <div className="my-2 my-lg-0">
+    <div className="dropdown my-2 my-lg-0">
       <img
         src={AppState.account?.picture || AppState.user?.picture}
         alt="account photo"
@@ -34,7 +34,7 @@ function Login() {
       />
 
       <div
-        className="dropdown-menu dropdown-menu-lg-end dropdown-menu-start p-0"
+        className="dropdown-menu dropdown-menu-lg-end dropdown-menu-start mt-0 p-0"
         aria-labelledby="authDropdown">
         <div className="list-group">
           <Link to={'Account'}>
