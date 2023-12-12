@@ -2,11 +2,19 @@ import React, { useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import { AppState } from '../AppState.js'
 import { gamesService } from '../services/GamesService.js'
-import { mdiHeartOutline } from '@mdi/js'
+import { mdiHeart, mdiHeartOutline } from '@mdi/js'
 import Icon from '@mdi/react'
 import Pop from '../utils/Pop.js'
 
 let page = 1
+
+async function createSavedGame(gameData) {
+  try {
+    await gamesService.createSavedGame(gameData)
+  } catch (error) {
+    Pop.error(error.message, '[CREATING SAVED GAME]')
+  }
+}
 
 function getColors(score) {
   if (score >= 75) {
@@ -74,8 +82,18 @@ function GameCard() {
               <p className="card-title fw-bold">{g.name}</p>
             </div>
             <div>
-              {AppState.account && (
-                <button className="btn btn-dark px-2 py-1 d-flex align-items-center" type="button">
+              {AppState.account && AppState.savedGames.find((s) => s.id == g.id) ? (
+                <button
+                  onClick={() => {}}
+                  className="btn btn-dark px-2 py-1 d-flex align-items-center"
+                  type="button">
+                  <Icon path={mdiHeart} size={0.75} />
+                </button>
+              ) : (
+                <button
+                  onClick={() => createSavedGame(g)}
+                  className="btn btn-dark px-2 py-1 d-flex align-items-center"
+                  type="button">
                   <Icon path={mdiHeartOutline} size={0.75} />
                 </button>
               )}

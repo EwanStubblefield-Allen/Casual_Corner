@@ -8,7 +8,10 @@ class ObservableAppState {
   user = null
   /** @type {import('./models/Account.js').Account} */
   account = null
+  /** @type {import('./models/Game.js').Game[]} */
   games = []
+  /** @type {import('./models/Game.js').Game[]} */
+  savedGames = []
 }
 
 // eslint-disable-next-line no-undef

@@ -19,10 +19,11 @@ import jakarta.transaction.Transactional;
 @RestController
 @RequestMapping("account")
 public class AccountController {
+  @Autowired
   private final AccountService accountService;
+  @Autowired
   private final SecurityConfig securityConfig;
 
-  @Autowired
   public AccountController(AccountService accountService, SecurityConfig securityConfig) {
     this.accountService = accountService;
     this.securityConfig = securityConfig;

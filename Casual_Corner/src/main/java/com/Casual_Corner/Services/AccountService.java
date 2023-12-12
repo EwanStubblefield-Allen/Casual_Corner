@@ -2,6 +2,7 @@ package com.Casual_Corner.Services;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.Casual_Corner.Models.Account;
@@ -9,6 +10,7 @@ import com.Casual_Corner.Repositories.AccountRepository;
 
 @Service
 public class AccountService {
+  @Autowired
   private final AccountRepository accountRepository;
 
   public AccountService(AccountRepository accountRepository) {
