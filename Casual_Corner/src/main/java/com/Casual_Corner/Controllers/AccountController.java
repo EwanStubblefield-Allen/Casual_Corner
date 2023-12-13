@@ -1,5 +1,7 @@
 package com.Casual_Corner.Controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.Casual_Corner.SecurityConfig;
 import com.Casual_Corner.Models.Account;
+import com.Casual_Corner.Models.Game;
 import com.Casual_Corner.Services.AccountService;
+import com.Casual_Corner.Services.SavedGamesService;
 
 import jakarta.transaction.Transactional;
 
@@ -23,16 +27,26 @@ public class AccountController {
   private final AccountService accountService;
   @Autowired
   private final SecurityConfig securityConfig;
+  @Autowired
+  private final SavedGamesService savedGamesService;
 
-  public AccountController(AccountService accountService, SecurityConfig securityConfig) {
+  public AccountController(AccountService accountService, SecurityConfig securityConfig,
+      SavedGamesService savedGamesService) {
     this.accountService = accountService;
     this.securityConfig = securityConfig;
+    this.savedGamesService = savedGamesService;
   }
 
   @GetMapping
   public Account get(@RequestHeader(name = "Authorization") String token) {
     Account userInfo = securityConfig.getUserInfo(token);
     return accountService.getOrCreateProfile(userInfo);
+  }
+
+  @GetMapping("savedGames")
+  public List<Game> getGamesByCreatorId(@RequestHeader(name = "Authorization") String token) {
+    Account userInfo = securityConfig.getUserInfo(token);
+    return savedGamesService.getGames(userInfo.getId());
   }
 
   @PutMapping

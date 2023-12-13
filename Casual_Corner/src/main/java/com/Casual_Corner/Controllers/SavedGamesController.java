@@ -3,9 +3,12 @@ package com.Casual_Corner.Controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.Casual_Corner.SecurityConfig;
+import com.Casual_Corner.Models.Account;
 import com.Casual_Corner.Models.Game;
 import com.Casual_Corner.Services.SavedGamesService;
 
@@ -14,13 +17,17 @@ import com.Casual_Corner.Services.SavedGamesService;
 public class SavedGamesController {
   @Autowired
   private final SavedGamesService savedGamesService;
+  private final SecurityConfig securityConfig;
 
-  public SavedGamesController(SavedGamesService savedGamesService) {
+  public SavedGamesController(SavedGamesService savedGamesService, SecurityConfig securityConfig) {
     this.savedGamesService = savedGamesService;
+    this.securityConfig = securityConfig;
   }
 
   @PostMapping
-  public Game createSavedGames(@RequestBody Game gameData) {
+  public Game createSavedGames(@RequestHeader(name = "Authorization") String token, @RequestBody Game gameData) {
+    Account userInfo = securityConfig.getUserInfo(token);
+    gameData.setCreatorId(userInfo.getId());
     return savedGamesService.createSavedGames(gameData);
   }
 }
