@@ -23,13 +23,11 @@ import jakarta.transaction.Transactional;
 @RestController
 @RequestMapping("account")
 public class AccountController {
-  @Autowired
   private final AccountService accountService;
-  @Autowired
   private final SecurityConfig securityConfig;
-  @Autowired
   private final SavedGamesService savedGamesService;
 
+  @Autowired
   public AccountController(AccountService accountService, SecurityConfig securityConfig,
       SavedGamesService savedGamesService) {
     this.accountService = accountService;
@@ -46,7 +44,7 @@ public class AccountController {
   @GetMapping("savedGames")
   public List<Game> getGamesByCreatorId(@RequestHeader(name = "Authorization") String token) {
     Account userInfo = securityConfig.getUserInfo(token);
-    return savedGamesService.getGames(userInfo.getId());
+    return savedGamesService.getSavedGamesByCreatorId(userInfo.getId());
   }
 
   @PutMapping

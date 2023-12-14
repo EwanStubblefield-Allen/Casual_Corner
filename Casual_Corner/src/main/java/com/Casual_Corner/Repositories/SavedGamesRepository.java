@@ -11,6 +11,6 @@ import com.Casual_Corner.Models.Game;
 
 @Repository
 public interface SavedGamesRepository extends JpaRepository<Game, String> {
-  @Query("SELECT g FROM games g WHERE g.creatorId = ?1")
+  @Query("SELECT g FROM Game g WHERE g.creatorId = ?1")
   Optional<List<Game>> findAllByCreatorId(String creatorId);
 }
