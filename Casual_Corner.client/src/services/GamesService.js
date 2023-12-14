@@ -40,11 +40,25 @@ class GamesService {
     AppState.games = AppState.games.concat(games)
   }
 
-  async createSavedGame(gameData) {
-    gameData = this.converter(gameData)
-    const res = await api.post('api/savedGames', gameData)
-    AppState.savedGames.push(this.converter(new Game(res.data)))
+  async getGameById(gameId) {
+    const res = await api.get(`api/games/${gameId}`)
+    const game = new Game(res.data)
+    return this.converter(game)
+  }
+
+  async getGamesByCreatorId() {
+    const res = await api.get('account/games')
+    AppState.savedGames = res.data.map((d) => {
+      const game = new Game(d)
+      return this.converter(game)
+    })
     logger.log(AppState.savedGames)
+  }
+
+  async createGame(gameData) {
+    gameData = this.converter(gameData)
+    const res = await api.post('api/games', gameData)
+    AppState.savedGames.push(this.converter(new Game(res.data)))
   }
 
   converter(data) {

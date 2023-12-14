@@ -5,6 +5,7 @@ import { logger } from '../utils/Logger.js'
 import { accountService } from './AccountService'
 import { api } from './AxiosService'
 import { socketService } from './SocketService'
+import { gamesService } from './GamesService.js'
 
 export const AuthService = initialize({
   domain,
@@ -13,10 +14,7 @@ export const AuthService = initialize({
   useRefreshTokens: true,
   onRedirectCallback: (appState) => {
     try {
-      const url =
-        appState && appState.targetUrl
-          ? appState.targetUrl
-          : window.location.pathname
+      const url = appState && appState.targetUrl ? appState.targetUrl : window.location.pathname
       location.hash = url
     } catch (e) {
       logger.error('[AuthRedirectError]', e)
@@ -32,6 +30,7 @@ AuthService.on(AuthService.AUTH_EVENTS.AUTHENTICATED, async () => {
   await accountService.getAccount()
   socketService.authenticate(AuthService.bearer)
   // NOTE if there is something you want to do once the user is authenticated, place that here
+  await gamesService.getGamesByCreatorId()
 })
 
 async function refreshAuthToken(config) {

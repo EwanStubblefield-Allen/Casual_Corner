@@ -16,7 +16,7 @@ import com.Casual_Corner.SecurityConfig;
 import com.Casual_Corner.Models.Account;
 import com.Casual_Corner.Models.Game;
 import com.Casual_Corner.Services.AccountService;
-import com.Casual_Corner.Services.SavedGamesService;
+import com.Casual_Corner.Services.GamesService;
 
 import jakarta.transaction.Transactional;
 
@@ -25,14 +25,14 @@ import jakarta.transaction.Transactional;
 public class AccountController {
   private final AccountService accountService;
   private final SecurityConfig securityConfig;
-  private final SavedGamesService savedGamesService;
+  private final GamesService GamesService;
 
   @Autowired
   public AccountController(AccountService accountService, SecurityConfig securityConfig,
-      SavedGamesService savedGamesService) {
+      GamesService GamesService) {
     this.accountService = accountService;
     this.securityConfig = securityConfig;
-    this.savedGamesService = savedGamesService;
+    this.GamesService = GamesService;
   }
 
   @GetMapping
@@ -41,10 +41,10 @@ public class AccountController {
     return accountService.getOrCreateProfile(userInfo);
   }
 
-  @GetMapping("savedGames")
+  @GetMapping("games")
   public List<Game> getGamesByCreatorId(@RequestHeader(name = "Authorization") String token) {
     Account userInfo = securityConfig.getUserInfo(token);
-    return savedGamesService.getSavedGamesByCreatorId(userInfo.getId());
+    return GamesService.getGamesByCreatorId(userInfo.getId());
   }
 
   @PutMapping

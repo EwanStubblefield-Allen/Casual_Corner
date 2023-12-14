@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.Casual_Corner.Models.Game;
 
 @Repository
-public interface SavedGamesRepository extends JpaRepository<Game, String> {
+public interface GamesRepository extends JpaRepository<Game, String> {
   @Query("SELECT g FROM Game g WHERE g.creatorId = ?1")
   Optional<List<Game>> findAllByCreatorId(String creatorId);
 }

@@ -12,29 +12,29 @@ import org.springframework.web.bind.annotation.RestController;
 import com.Casual_Corner.SecurityConfig;
 import com.Casual_Corner.Models.Account;
 import com.Casual_Corner.Models.Game;
-import com.Casual_Corner.Services.SavedGamesService;
+import com.Casual_Corner.Services.GamesService;
 
 @RestController
-@RequestMapping("api/savedGames")
-public class SavedGamesController {
+@RequestMapping("api/Games")
+public class GamesController {
   @Autowired
-  private final SavedGamesService savedGamesService;
+  private final GamesService GamesService;
   private final SecurityConfig securityConfig;
 
-  public SavedGamesController(SavedGamesService savedGamesService, SecurityConfig securityConfig) {
-    this.savedGamesService = savedGamesService;
+  public GamesController(GamesService GamesService, SecurityConfig securityConfig) {
+    this.GamesService = GamesService;
     this.securityConfig = securityConfig;
   }
 
   @GetMapping("{gameId}")
-  public Game getSavedGameById(@PathVariable String gameId) {
-    return savedGamesService.getSavedGameById(gameId);
+  public Game getGameById(@PathVariable String gameId) {
+    return GamesService.getGameById(gameId);
   }
 
   @PostMapping
-  public Game createSavedGame(@RequestHeader(name = "Authorization") String token, @RequestBody Game gameData) {
+  public Game createGame(@RequestHeader(name = "Authorization") String token, @RequestBody Game gameData) {
     Account userInfo = securityConfig.getUserInfo(token);
     gameData.setCreatorId(userInfo.getId());
-    return savedGamesService.createSavedGame(gameData);
+    return GamesService.createGame(gameData);
   }
 }
