@@ -1,6 +1,5 @@
 import { AppState } from '../AppState.js'
 import { Game } from '../models/Game.js'
-import { logger } from '../utils/Logger.js'
 import { api, gamesApi } from './AxiosService.js'
 
 const keys = ['platforms', 'genres']
@@ -52,13 +51,19 @@ class GamesService {
       const game = new Game(d)
       return this.converter(game)
     })
-    logger.log(AppState.savedGames)
   }
 
   async createGame(gameData) {
     gameData = this.converter(gameData)
     const res = await api.post('api/games', gameData)
-    AppState.savedGames.push(this.converter(new Game(res.data)))
+    const game = new Game(res.data)
+    AppState.savedGames = [...AppState.savedGames, this.converter(game)]
+  }
+
+  async removeGame(gameId) {
+    const res = await api.delete(`api/games/${gameId}`)
+    AppState.savedGames = AppState.savedGames.filter((s) => s.id != gameId)
+    return new Game(res.data)
   }
 
   converter(data) {

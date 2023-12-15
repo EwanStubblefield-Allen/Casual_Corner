@@ -13,22 +13,31 @@ import com.Casual_Corner.Repositories.GamesRepository;
 @Service
 public class GamesService {
   @Autowired
-  private final GamesRepository GamesRepository;
+  private final GamesRepository gamesRepository;
 
-  public GamesService(GamesRepository GamesRepository) {
-    this.GamesRepository = GamesRepository;
+  public GamesService(GamesRepository gamesRepository) {
+    this.gamesRepository = gamesRepository;
   }
 
   public List<Game> getGamesByCreatorId(String creatorId) {
-    return GamesRepository.findAllByCreatorId(creatorId).get();
+    return gamesRepository.findAllByCreatorId(creatorId).get();
   }
 
   public Game getGameById(String gameId) {
-    return GamesRepository.findById(gameId).orElseThrow(
+    return gamesRepository.findById(gameId).orElseThrow(
         () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "[NO GAME MATCHES THE ID: " + gameId + "]"));
   }
 
   public Game createGame(Game gameData) {
-    return GamesRepository.save(gameData);
+    return gamesRepository.save(gameData);
+  }
+
+  public Game removeGame(String gameId, String userId) {
+    Game gameToDelete = getGameById(gameId);
+    if (gameToDelete.getCreatorId() != userId) {
+      new ResponseStatusException(HttpStatus.UNAUTHORIZED, "[YOU ARE NOT THE CREATOR OF THIS SAVED GAME]");
+    }
+    gamesRepository.deleteById(gameId);
+    return gameToDelete;
   }
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import GameCard from '../components/GameCard.jsx'
+import GamesComponent from '../components/GamesComponent.jsx'
 
 export default function HomePage() {
   return (
@@ -9,7 +9,7 @@ export default function HomePage() {
           <div className="d-none d-md-block col-2"></div>
           <div className="col-md-10">
             <p className="fs-1 fw-bold">Games</p>
-            <GameCard />
+            <GamesComponent />
           </div>
         </div>
       </div>

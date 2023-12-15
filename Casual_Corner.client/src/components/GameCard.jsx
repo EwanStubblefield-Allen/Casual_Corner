@@ -1,20 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { observer } from 'mobx-react-lite'
 import { AppState } from '../AppState.js'
+import { Game } from '../models/Game.js'
 import { gamesService } from '../services/GamesService.js'
 import { mdiHeart, mdiHeartOutline } from '@mdi/js'
 import Icon from '@mdi/react'
+import PropTypes from 'prop-types'
 import Pop from '../utils/Pop.js'
-
-let page = 1
-
-async function createSavedGame(gameData) {
-  try {
-    await gamesService.createSavedGame(gameData)
-  } catch (error) {
-    Pop.error(error.message, '[CREATING SAVED GAME]')
-  }
-}
 
 function getColors(score) {
   if (score >= 75) {
@@ -26,48 +18,41 @@ function getColors(score) {
   }
 }
 
-function GameCard() {
-  const [isLoading, setIsLoading] = useState(false)
-  const [scrollTop, setScrollTop] = useState(0)
+function GameCard({ gameProp }) {
+  let foundGame = AppState.savedGames.find((s) => s.name == gameProp.name)
 
-  useEffect(() => {
-    window.addEventListener('scroll', (e) => setScrollTop(e.target.documentElement.scrollTop))
-    getGames()
-  }, [])
-
-  useEffect(() => {
-    if (
-      !scrollTop ||
-      scrollTop + document.documentElement.clientHeight <
-        document.documentElement.scrollHeight - 100 ||
-      isLoading
-    ) {
-      return
-    }
-    page++
-    getGames()
-  }, [scrollTop])
-
-  async function getGames() {
+  async function createGame() {
     try {
-      setIsLoading(true)
-      await gamesService.getGames('page_size=12', `page=${page}`)
+      await gamesService.createGame(gameProp)
+      Pop.success(`${gameProp.name} was added to your saved games!`)
     } catch (error) {
-      Pop.error(error.message, '[GETTING GAMES]')
-    } finally {
-      setIsLoading(false)
+      Pop.error(error.message, '[CREATING GAME]')
     }
   }
 
-  const games = AppState.games.map((g) => {
-    return (
-      <div key={g.id} className="col-12 col-sm-6 col-md-4 col-lg-3 p-2">
-        <div className="card bg-dark elevation-5 h-100">
-          <img className="card-img vh-25" src={g.background_image} alt={g.name} />
-          <div className="card-body d-flex flex-column justify-content-between">
-            <div>
-              <div className="d-flex justify-content-end">
-                {/* {g.platforms.map((p) => (
+  async function removeGame() {
+    try {
+      const isSure = await Pop.confirm(
+        `Are you sure you want to delete ${gameProp.name} from your saved games?`
+      )
+
+      if (!isSure) {
+        return
+      }
+      const game = await gamesService.removeGame(foundGame.id)
+      Pop.toast(`${game.name} was removed from your saved games!`)
+    } catch (error) {
+      Pop.error(error.message, '[DELETING GAME]')
+    }
+  }
+
+  return (
+    <div className="card bg-dark elevation-5 h-100">
+      <img className="card-img vh-25" src={gameProp.background_image} alt={gameProp.name} />
+      <div className="card-body d-flex flex-column justify-content-between">
+        <div>
+          <div className="d-flex justify-content-end">
+            {/* {gameProp.platforms.map((p) => (
                 <img
                   className="img-fluid"
                   key={p.platform.id}
@@ -75,41 +60,36 @@ function GameCard() {
                   alt={p.platform.name}
                 />
               ))} */}
-                <p className="px-1 rounded" style={getColors(g.metacritic)}>
-                  {g.metacritic}
-                </p>
-              </div>
-              <p className="card-title fw-bold">{g.name}</p>
-            </div>
-            <div>
-              {AppState.account && AppState.savedGames.find((s) => s.id == g.id) ? (
-                <button
-                  onClick={() => {}}
-                  className="btn btn-dark px-2 py-1 d-flex align-items-center"
-                  type="button">
-                  <Icon path={mdiHeart} size={0.75} />
-                </button>
-              ) : (
-                <button
-                  onClick={() => createSavedGame(g)}
-                  className="btn btn-dark px-2 py-1 d-flex align-items-center"
-                  type="button">
-                  <Icon path={mdiHeartOutline} size={0.75} />
-                </button>
-              )}
-            </div>
+            <p className="px-1 rounded" style={getColors(gameProp.metacritic)}>
+              {gameProp.metacritic}
+            </p>
           </div>
+          <p className="card-title fw-bold">{gameProp.name}</p>
+        </div>
+        <div>
+          {AppState.account && foundGame ? (
+            <button
+              onClick={() => removeGame()}
+              className="btn btn-dark px-2 py-1 d-flex align-items-center"
+              type="button">
+              <Icon path={mdiHeart} size={0.75} />
+            </button>
+          ) : (
+            <button
+              onClick={() => createGame()}
+              className="btn btn-dark px-2 py-1 d-flex align-items-center"
+              type="button">
+              <Icon path={mdiHeartOutline} size={0.75} />
+            </button>
+          )}
         </div>
       </div>
-    )
-  })
-
-  return (
-    <>
-      <section className="row">{AppState.games.length ? games : ''}</section>
-      <section className="row">{isLoading && <p>Loading...</p>}</section>
-    </>
+    </div>
   )
+}
+
+GameCard.propTypes = {
+  gameProp: PropTypes.instanceOf(Game).isRequired
 }
 
 export default observer(GameCard)

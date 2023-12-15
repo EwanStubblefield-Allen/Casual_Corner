@@ -19,7 +19,8 @@ public class CasualCornerApplication {
 			public void addCorsMappings(CorsRegistry registry) {
 				registry
 						.addMapping("/**")
-						.allowedOrigins("http://localhost:8080");
+						.allowedOrigins("http://localhost:8080")
+						.allowedMethods("GET", "POST", "PUT", "DELETE");
 			}
 		};
 	}

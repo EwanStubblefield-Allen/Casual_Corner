@@ -8,6 +8,6 @@ export class Game {
     this.playtime = data.playtime
     this.platforms = data.parent_platforms || data.platforms
     this.genres = data.genres
-    this.esrb_rating = data.esrb_rating?.name
+    this.esrb_rating = data.esrb_rating?.name || data.esrb_rating
   }
 }
