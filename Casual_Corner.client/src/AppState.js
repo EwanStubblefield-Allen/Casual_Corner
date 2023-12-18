@@ -12,6 +12,9 @@ class ObservableAppState {
   games = []
   /** @type {import('./models/Game.js').Game[]} */
   savedGames = []
+  params = { page: 1 }
+  platforms = []
+  genres = []
 }
 
 // eslint-disable-next-line no-undef

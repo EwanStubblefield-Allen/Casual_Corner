@@ -1,21 +1,41 @@
 import { AppState } from '../AppState.js'
 import { Game } from '../models/Game.js'
+import { logger } from '../utils/Logger.js'
 import { api, gamesApi } from './AxiosService.js'
 
 const keys = ['platforms', 'genres']
 
 class GamesService {
-  async getGames(...options) {
-    let url = 'api/games?'
-    options.forEach((o, index) => {
-      url += o
-
-      if (options.length - 1 != index) {
-        url += '&'
+  async getPlatforms() {
+    const res = await gamesApi.get('api/platforms/lists/parents')
+    AppState.platforms = res.data.results.map((d) => {
+      return {
+        id: d.id,
+        name: d.name
       }
     })
-    const res = await gamesApi.get(url)
+    // const res = await gamesApi.get('api/platforms/lists/parents')
+  }
 
+  async getGenres() {
+    const res = await gamesApi.get('api/genres')
+    AppState.genres = res.data.results.map((d) => {
+      return {
+        id: d.id,
+        name: d.name,
+        image: d.image_background
+      }
+    })
+    logger.log(AppState.genres)
+  }
+
+  async getGames() {
+    let url = 'api/games?page_size=24&'
+    const params = Object.entries(AppState.params)
+    params.forEach((p) => {
+      url += `${p[0]}=${p[1]}&`
+    })
+    const res = await gamesApi.get(url)
     const games = res.data.results.map((r) => {
       const platforms = r.parent_platforms
       const length = platforms.length > r.genres.length ? platforms.length : r.genres.length

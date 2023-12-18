@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import GameCard from './GameCard.jsx'
+import PropTypes from 'prop-types'
 import { observer } from 'mobx-react-lite'
 import { AppState } from '../AppState.js'
 import { gamesService } from '../services/GamesService.js'
 import Pop from '../utils/Pop.js'
 
-let page = 1
-
-function GamesComponent() {
-  const [isLoading, setIsLoading] = useState(false)
+function GamesComponent({ getGames, isLoading }) {
   const [scrollTop, setScrollTop] = useState(0)
 
   useEffect(() => {
     window.addEventListener('scroll', (e) => setScrollTop(e.target.documentElement.scrollTop))
     getGames()
+    getPlatforms()
+    getGenres()
   }, [])
 
   useEffect(() => {
@@ -25,18 +25,23 @@ function GamesComponent() {
     ) {
       return
     }
-    page++
+    AppState.params.page++
     getGames()
   }, [scrollTop])
 
-  async function getGames() {
+  async function getPlatforms() {
     try {
-      setIsLoading(true)
-      await gamesService.getGames('page_size=12', `page=${page}`)
+      await gamesService.getPlatforms()
     } catch (error) {
-      Pop.error(error.message, '[GETTING GAMES]')
-    } finally {
-      setIsLoading(false)
+      Pop.error(error.message, '[GETTING PLATFORMS]')
+    }
+  }
+
+  async function getGenres() {
+    try {
+      await gamesService.getGenres()
+    } catch (error) {
+      Pop.error(error.message, '[GETTING GENRES]')
     }
   }
 
@@ -46,12 +51,12 @@ function GamesComponent() {
     </div>
   ))
 
-  return (
-    <>
-      <section className="row">{AppState.games.length ? games : ''}</section>
-      <section className="row">{isLoading && <p>Loading...</p>}</section>
-    </>
-  )
+  return <section className="row">{AppState.games.length ? games : ''}</section>
+}
+
+GamesComponent.propTypes = {
+  getGames: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired
 }
 
 export default observer(GamesComponent)

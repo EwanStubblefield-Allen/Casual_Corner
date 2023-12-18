@@ -47,7 +47,7 @@ function GameCard({ gameProp }) {
   }
 
   return (
-    <div className="card bg-dark elevation-5 h-100">
+    <div className="card bg-dark border-0 elevation-5 h-100">
       <img className="card-img vh-25" src={gameProp.background_image} alt={gameProp.name} />
       <div className="card-body d-flex flex-column justify-content-between">
         <div>
