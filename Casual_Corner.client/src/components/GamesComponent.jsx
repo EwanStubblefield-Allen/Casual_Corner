@@ -45,11 +45,16 @@ function GamesComponent({ getGames, isLoading }) {
     }
   }
 
-  const games = AppState.games.map((g) => (
-    <div key={g.id} className="col-12 col-sm-6 col-md-4 col-lg-3 p-2">
-      <GameCard gameProp={g} />
-    </div>
-  ))
+  const games = AppState.games.map((g) => {
+    if (!g.background_image) {
+      return
+    }
+    return (
+      <div key={g.id} className="col-12 col-sm-6 col-md-4 col-lg-3 p-2">
+        <GameCard gameProp={g} />
+      </div>
+    )
+  })
 
   return <section className="row">{AppState.games.length ? games : ''}</section>
 }

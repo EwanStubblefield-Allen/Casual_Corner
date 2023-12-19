@@ -45,7 +45,6 @@ function GameCard({ gameProp }) {
       Pop.error(error.message, '[DELETING GAME]')
     }
   }
-
   return (
     <div className="card bg-dark border-0 elevation-5 h-100">
       <img className="card-img vh-25" src={gameProp.background_image} alt={gameProp.name} />

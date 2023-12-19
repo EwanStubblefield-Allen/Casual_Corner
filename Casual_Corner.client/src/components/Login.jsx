@@ -54,7 +54,7 @@ function Login() {
   )
 
   return (
-    <div>
+    <div className="ps-2">
       <span className="navbar-text">
         {!AppState.account?.id ? notAuthenticated : authenticated}
       </span>

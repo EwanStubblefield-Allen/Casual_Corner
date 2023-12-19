@@ -5,7 +5,7 @@ import { Navbar } from './components/Navbar.jsx'
 export function App() {
   return (
     <div className="App" id="app">
-      <header>
+      <header className="sticky-top">
         <Navbar />
       </header>
 

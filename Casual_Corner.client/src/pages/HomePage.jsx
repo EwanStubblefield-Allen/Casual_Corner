@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import GamesComponent from '../components/GamesComponent.jsx'
 import { AppState } from '../AppState.js'
 import { gamesService } from '../services/GamesService.js'
-import { mdiFilterOff } from '@mdi/js'
+import { mdiArrowUpCircle, mdiFilterOff } from '@mdi/js'
 import Icon from '@mdi/react'
 import Pop from '../utils/Pop.js'
 
@@ -13,6 +13,10 @@ export default function HomePage() {
   async function getGames(key = '', value) {
     try {
       setIsLoading(true)
+
+      if (!key && !AppState.next) {
+        return
+      }
 
       if (key) {
         AppState.games = []
@@ -71,8 +75,10 @@ export default function HomePage() {
                     <li
                       onClick={(e) => {
                         let value = e.target.innerText.toLowerCase()
+                        const checkMetacritic =
+                          value == 'metacritic' && AppState.params.ordering != '-' + value
 
-                        if (AppState.params.ordering != value) {
+                        if (AppState.params.ordering == value || checkMetacritic) {
                           value = '-' + value
                         }
                         getGames('ordering', value)
@@ -106,6 +112,9 @@ export default function HomePage() {
               <div
                 className="d-flex align-items-center selectable p-1 rounded"
                 onClick={() => {
+                  if (Object.keys(AppState.params).length == 1) {
+                    return
+                  }
                   AppState.games = []
                   AppState.params = { page: 1 }
                   getGames()
@@ -114,11 +123,17 @@ export default function HomePage() {
                 <p className="text-danger">Clear filters</p>
               </div>
             </div>
-            <div className="py-3">
-              <GamesComponent getGames={getGames} isLoading={isLoading} />
-              <section className="row">{isLoading && <p>Loading...</p>}</section>
-            </div>
+            <GamesComponent getGames={getGames} isLoading={isLoading} />
+            <section className="row">{isLoading && <p>Loading...</p>}</section>
           </div>
+        </div>
+        <div className="position-fixed bottom-0 end-0">
+          <Icon
+            onClick={() => (document.documentElement.scrollTop = 0)}
+            path={mdiArrowUpCircle}
+            size={2.5}
+            className="bg-light rounded-circle m-3 elevation-5 selectable"
+          />
         </div>
       </div>
     </div>

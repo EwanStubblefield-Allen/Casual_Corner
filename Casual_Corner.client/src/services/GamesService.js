@@ -36,6 +36,7 @@ class GamesService {
       url += `${p[0]}=${p[1]}&`
     })
     const res = await gamesApi.get(url)
+    AppState.next = res.data.next
     const games = res.data.results.map((r) => {
       const platforms = r.parent_platforms
       const length = platforms.length > r.genres.length ? platforms.length : r.genres.length
@@ -56,6 +57,7 @@ class GamesService {
       }
       return new Game(r)
     })
+    logger.log(games)
     AppState.games = AppState.games.concat(games)
   }
 
