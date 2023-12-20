@@ -11,9 +11,12 @@ function GamesComponent({ getGames, isLoading }) {
 
   useEffect(() => {
     window.addEventListener('scroll', (e) => setScrollTop(e.target.documentElement.scrollTop))
-    getGames()
-    getPlatforms()
-    getGenres()
+
+    if (!AppState.games.length) {
+      getGames()
+      getPlatforms()
+      getGenres()
+    }
   }, [])
 
   useEffect(() => {
@@ -49,11 +52,7 @@ function GamesComponent({ getGames, isLoading }) {
     if (!g.background_image) {
       return
     }
-    return (
-      <div key={g.id} className="col-12 col-sm-6 col-md-4 col-lg-3 p-2">
-        <GameCard gameProp={g} />
-      </div>
-    )
+    return <GameCard key={g.id} gameProp={g} />
   })
 
   return <section className="row">{AppState.games.length ? games : ''}</section>

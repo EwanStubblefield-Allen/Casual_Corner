@@ -20,6 +20,10 @@ public class AccountService {
   public Account getOrCreateProfile(Account userInfo) {
     Optional<Account> profileOptional = accountRepository.findById(userInfo.getId());
     if (profileOptional.isEmpty()) {
+      if (userInfo.getCoverImg() == null) {
+        userInfo.setCoverImg(
+            "https://png.pngtree.com/thumb_back/fh260/background/20220428/pngtree-magic-portal-at-winter-landscape-image_1104947.jpg");
+      }
       return accountRepository.save(userInfo);
     }
     return profileOptional.get();

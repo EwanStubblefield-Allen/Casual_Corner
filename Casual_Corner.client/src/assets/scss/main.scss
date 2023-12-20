@@ -15,8 +15,13 @@ body {
   background-color: var(--body-bg);
 }
 
+header {
+  z-index: 1;
+}
+
 main {
   flex-grow: 1;
+  margin-top: 71px;
 }
 
 p {

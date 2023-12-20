@@ -5,7 +5,7 @@ import { Navbar } from './components/Navbar.jsx'
 export function App() {
   return (
     <div className="App" id="app">
-      <header className="sticky-top">
+      <header className="position-fixed w-100">
         <Navbar />
       </header>
 

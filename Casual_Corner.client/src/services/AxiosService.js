@@ -11,6 +11,4 @@ export const gamesApi = Axios.create({
   timeout: 8000
 })
 
-api.defaults.headers.authorization = JSON.parse(
-  localStorage.getItem('user-token')
-)
+api.defaults.headers.authorization = JSON.parse(localStorage.getItem('user-token'))

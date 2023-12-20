@@ -1,6 +1,5 @@
 import { AppState } from '../AppState.js'
 import { Game } from '../models/Game.js'
-import { logger } from '../utils/Logger.js'
 import { api, gamesApi } from './AxiosService.js'
 
 const keys = ['platforms', 'genres']
@@ -26,7 +25,6 @@ class GamesService {
         image: d.image_background
       }
     })
-    logger.log(AppState.genres)
   }
 
   async getGames() {
@@ -57,7 +55,6 @@ class GamesService {
       }
       return new Game(r)
     })
-    logger.log(games)
     AppState.games = AppState.games.concat(games)
   }
 

@@ -5,11 +5,11 @@
   overflow: hidden;
   background-color: #dcdcdc;
   pointer-events: none;
-  &.dark{
+  &.dark {
     background-color: #9d9c9c;
   }
 
-  &.card{
+  &.card {
     background-color: #fff;
     &::before {
       content: '';
@@ -19,38 +19,38 @@
       top: 0;
       height: 100%;
       background: linear-gradient(to right, transparent 0%, #f6f6f6 50%, transparent 100%);
-      animation: load 1.5s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+      animation: load 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
       width: 50%;
     }
   }
-  &.avatar{
+  &.avatar {
     border-radius: 50%;
     height: 45px;
     width: 45px;
-    &.tile{
+    &.tile {
       border-radius: 5%;
     }
-    &.md{
+    &.md {
       height: 65px;
       width: 65px;
     }
-    &.lg{
+    &.lg {
       height: 85px;
       width: 85px;
     }
   }
-  &.text{
+  &.text {
     width: clamp(50%, 160px, 100%);
     height: 1rem;
     line-height: 1.5rem;
-    margin: .5rem 0;
-    &.sm{
+    margin: 0.5rem 0;
+    &.sm {
       width: clamp(25%, 80px, 100%);
     }
-    &.lg{
+    &.lg {
       width: clamp(75%, 250px, 100%);
     }
-    &.block{
+    &.block {
       width: clamp(100%, 500px, 100%);
     }
   }
@@ -62,11 +62,10 @@
     top: 0;
     height: 100%;
     width: 50px;
-    background: linear-gradient(to right, transparent 0%, #E8E8E8 50%, transparent 100%);
-    animation: load 1s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+    background: linear-gradient(to right, transparent 0%, #e8e8e8 50%, transparent 100%);
+    animation: load 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   }
 }
-
 
 @keyframes load {
   from {

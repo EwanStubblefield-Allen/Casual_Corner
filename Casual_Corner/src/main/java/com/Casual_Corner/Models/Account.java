@@ -33,4 +33,6 @@ public class Account {
   private String name;
   @Column(nullable = false)
   private String picture;
+  @Column(nullable = false)
+  private String coverImg;
 }

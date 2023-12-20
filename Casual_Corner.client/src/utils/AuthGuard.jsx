@@ -6,13 +6,13 @@ import { RouterError } from './Errors.js'
 const AuthGuard = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-  const checkUserToken = () => {
+  useEffect(() => {
+    checkUserToken()
+  }, [isLoggedIn])
+
+  function checkUserToken() {
     if (!domain || !audience || !clientId) {
-      throw new RouterError(
-        '[INVALID AUTH SETTINGS]',
-        'Please update auth keys in env.js',
-        400
-      )
+      throw new RouterError('[INVALID AUTH SETTINGS]', 'Please update auth keys in env.js', 400)
     }
     const userToken = localStorage.getItem('user-token')
 
@@ -26,9 +26,7 @@ const AuthGuard = (props) => {
     }
     setIsLoggedIn(true)
   }
-  useEffect(() => {
-    checkUserToken()
-  }, [isLoggedIn])
+
   return (
     <React.Fragment>
       {

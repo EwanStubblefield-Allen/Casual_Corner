@@ -46,12 +46,13 @@ function GameCard({ gameProp }) {
     }
   }
   return (
-    <div className="card bg-dark border-0 elevation-5 h-100">
-      <img className="card-img vh-25" src={gameProp.background_image} alt={gameProp.name} />
-      <div className="card-body d-flex flex-column justify-content-between">
-        <div>
-          <div className="d-flex justify-content-end">
-            {/* {gameProp.platforms.map((p) => (
+    <div className="col-12 col-sm-6 col-md-4 col-lg-3 p-2">
+      <div className="card bg-dark border-0 elevation-5 h-100">
+        <img className="card-img vh-25" src={gameProp.background_image} alt={gameProp.name} />
+        <div className="card-body d-flex flex-column justify-content-between">
+          <div>
+            <div className="d-flex justify-content-end">
+              {/* {gameProp.platforms.map((p) => (
                 <img
                   className="img-fluid"
                   key={p.platform.id}
@@ -59,28 +60,29 @@ function GameCard({ gameProp }) {
                   alt={p.platform.name}
                 />
               ))} */}
-            <p className="px-1 rounded" style={getColors(gameProp.metacritic)}>
-              {gameProp.metacritic}
-            </p>
+              <p className="px-1 rounded" style={getColors(gameProp.metacritic)}>
+                {gameProp.metacritic}
+              </p>
+            </div>
+            <p className="card-title fw-bold">{gameProp.name}</p>
           </div>
-          <p className="card-title fw-bold">{gameProp.name}</p>
-        </div>
-        <div>
-          {AppState.account && foundGame ? (
-            <button
-              onClick={() => removeGame()}
-              className="btn btn-dark px-2 py-1 d-flex align-items-center"
-              type="button">
-              <Icon path={mdiHeart} size={0.75} />
-            </button>
-          ) : (
-            <button
-              onClick={() => createGame()}
-              className="btn btn-dark px-2 py-1 d-flex align-items-center"
-              type="button">
-              <Icon path={mdiHeartOutline} size={0.75} />
-            </button>
-          )}
+          <div>
+            {AppState.account && foundGame ? (
+              <button
+                onClick={removeGame}
+                className="btn btn-dark px-2 py-1 d-flex align-items-center"
+                type="button">
+                <Icon path={mdiHeart} size={0.75} />
+              </button>
+            ) : (
+              <button
+                onClick={createGame}
+                className="btn btn-dark px-2 py-1 d-flex align-items-center"
+                type="button">
+                <Icon path={mdiHeartOutline} size={0.75} />
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>

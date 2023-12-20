@@ -78,9 +78,9 @@ export default class Pop {
     if (error.isAxiosError) {
       // @ts-ignore
       const { response } = error
-      const errorObj = (response.data
-        ? response.data.error
-        : response.data) || { message: 'Invalid Request ' + response.status }
+      const errorObj = (response.data ? response.data.error : response.data) || {
+        message: 'Invalid Request ' + response.status
+      }
 
       if (!errorObj) {
         // @ts-ignore
