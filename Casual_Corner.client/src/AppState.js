@@ -12,6 +12,7 @@ class ObservableAppState {
   games = []
   /** @type {import('./models/Game.js').Game[]} */
   savedGames = []
+  activeGame = null
   platforms = []
   genres = []
   params = { page: 1 }

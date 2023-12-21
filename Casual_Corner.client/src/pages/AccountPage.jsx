@@ -13,7 +13,7 @@ function AccountPage() {
         <section className="row">
           <div className="col-12 col-md-12 p-0 position-relative">
             <img
-              className="cover-image"
+              className="img-fluid cover-image"
               src={AppState.account.coverImg}
               alt={`${AppState.account.name} CoverImg`}
             />

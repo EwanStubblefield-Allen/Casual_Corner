@@ -6,6 +6,7 @@ import AccountPage from './pages/AccountPage.jsx'
 import ErrorPage from './pages/ErrorPage.jsx'
 import HomePage from './pages/HomePage.jsx'
 import AuthGuard from './utils/AuthGuard.jsx'
+import GameDetailsPage from './pages/GameDetailsPage.jsx'
 
 export const router = createHashRouter([
   {
@@ -16,6 +17,10 @@ export const router = createHashRouter([
       {
         path: '',
         element: <HomePage />
+      },
+      {
+        path: 'gameDetails/:gameId',
+        element: <GameDetailsPage />
       },
       {
         path: 'account',

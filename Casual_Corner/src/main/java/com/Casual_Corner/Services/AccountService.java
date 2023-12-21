@@ -38,6 +38,7 @@ public class AccountService {
     Account original = getProfileByEmail(userInfo.getEmail());
     original.setName(userInfo.getName().length() > 0 ? userInfo.getName() : original.getName());
     original.setPicture(userInfo.getPicture().length() > 0 ? userInfo.getPicture() : original.getPicture());
+    original.setCoverImg(userInfo.getCoverImg().length() > 0 ? userInfo.getCoverImg() : original.getCoverImg());
     return original;
   }
 }

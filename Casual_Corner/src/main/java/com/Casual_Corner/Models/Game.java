@@ -1,7 +1,5 @@
 package com.Casual_Corner.Models;
 
-import java.time.LocalDate;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,20 +24,13 @@ public class Game {
   @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
   @Column(nullable = false)
-  private String name;
+  private Integer apiId;
   @Column(nullable = false)
-  private LocalDate released;
+  private String name;
   @Column(nullable = false)
   private String background_image;
   @Column(nullable = false)
   private Integer metacritic;
-  @Column(nullable = false)
-  private Integer playtime;
-  @Column(nullable = false, columnDefinition = "BLOB")
-  private String platforms;
-  @Column(nullable = false, columnDefinition = "BLOB")
-  private String genres;
-  private String esrb_rating;
   @Column(nullable = false)
   private String creatorId;
   @ManyToOne

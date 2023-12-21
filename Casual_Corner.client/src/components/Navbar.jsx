@@ -24,7 +24,7 @@ export function Navbar() {
   }
 
   return (
-    <nav className="navbar navbar-expand-lg bg-body-bg px-3">
+    <nav id="nav" className="navbar navbar-expand-lg navbar-light bg-body-bg px-3">
       <Link className="navbar-brand d-flex" to={''}>
         <div className="d-flex flex-column align-items-center">
           <img alt="logo" src={logo} height="45" className="bg-dark rounded" />
@@ -67,9 +67,17 @@ export function Navbar() {
           <li className="px-2">
             <div className="form-check form-switch m-0">
               <input
-                onChange={(e) =>
-                  document.body.setAttribute('data-theme', e.target.checked ? 'dark' : 'light')
-                }
+                onChange={(e) => {
+                  const isChecked = e.target.checked
+                  const navClassList = document.getElementById('nav').classList
+
+                  if (isChecked) {
+                    navClassList.add('navbar-dark')
+                  } else {
+                    navClassList.remove('navbar-dark')
+                  }
+                  document.body.setAttribute('data-theme', isChecked ? 'dark' : 'light')
+                }}
                 className="form-check-input"
                 type="checkbox"
                 role="switch"

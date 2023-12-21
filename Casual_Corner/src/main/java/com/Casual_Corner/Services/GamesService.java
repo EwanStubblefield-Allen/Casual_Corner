@@ -29,7 +29,8 @@ public class GamesService {
   }
 
   public Game createGame(Game gameData) {
-    return gamesRepository.save(gameData);
+    String gameId = gamesRepository.save(gameData).getId();
+    return getGameById(gameId);
   }
 
   public Game removeGame(String gameId, String userId) {

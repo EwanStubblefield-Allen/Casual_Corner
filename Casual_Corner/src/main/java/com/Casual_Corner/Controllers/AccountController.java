@@ -3,9 +3,7 @@ package com.Casual_Corner.Controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -51,10 +49,5 @@ public class AccountController {
   @Transactional
   public Account update(@RequestBody Account userInfo) {
     return accountService.update(userInfo);
-  }
-
-  @DeleteMapping(path = "{accountId}")
-  public void remove(@PathVariable("accountId") Long accountId) {
-
   }
 }
