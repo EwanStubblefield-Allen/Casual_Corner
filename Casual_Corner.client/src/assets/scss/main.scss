@@ -50,6 +50,12 @@ form:invalid button[type='submit'] {
   pointer-events: none;
 }
 
+.vh-75 {
+  height: 75vh;
+  object-fit: cover;
+  object-position: center;
+}
+
 .vh-25 {
   height: 25vh;
   object-fit: cover;

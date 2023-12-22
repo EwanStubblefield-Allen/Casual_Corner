@@ -4,7 +4,7 @@ import { AppState } from '../AppState.js'
 import { gamesService } from '../services/GamesService.js'
 import { mdiMagnify } from '@mdi/js'
 import Icon from '@mdi/react'
-import logo from '../assets/img/cw-logo.png'
+import logo from '../assets/img/Logo.png'
 import Login from './Login.jsx'
 import Pop from '../utils/Pop.js'
 

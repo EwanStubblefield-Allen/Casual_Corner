@@ -9,7 +9,7 @@ export function App() {
         <Navbar />
       </header>
 
-      <main>
+      <main className="container-fluid">
         <Outlet />
       </main>
     </div>

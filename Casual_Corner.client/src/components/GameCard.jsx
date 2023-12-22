@@ -9,16 +9,6 @@ import PropTypes from 'prop-types'
 import Pop from '../utils/Pop.js'
 import { Link } from 'react-router-dom'
 
-function getColors(score) {
-  if (score >= 75) {
-    return { color: '#66CC33', backgroundColor: '#66CC3330' }
-  } else if (score >= 50) {
-    return { color: '#FFCC33', backgroundColor: '#FFCC3330' }
-  } else {
-    return { color: '#FF0000', backgroundColor: '#FF000030' }
-  }
-}
-
 function GameCard({ gameProp }) {
   let foundGame = AppState.savedGames.find((s) => s.name == gameProp.name)
 
@@ -48,12 +38,14 @@ function GameCard({ gameProp }) {
   }
   return (
     <div className="col-12 col-sm-6 col-md-4 col-lg-3 p-2">
-      <Link to={`/gameDetails/${gameProp.id}`} className="card bg-dark border-0 elevation-5 h-100">
+      <Link
+        to={`/gameDetails/${gameProp.apiId || gameProp.id}`}
+        className="card bg-dark border-0 elevation-5 h-100">
         <img className="card-img vh-25" src={gameProp.background_image} alt={gameProp.name} />
         <div className="card-body d-flex flex-column justify-content-between">
           <div>
             <div className="d-flex justify-content-end">
-              <p className="px-1 rounded" style={getColors(gameProp.metacritic)}>
+              <p className="px-1 rounded" style={gamesService.getColors(gameProp.metacritic)}>
                 {gameProp.metacritic}
               </p>
             </div>

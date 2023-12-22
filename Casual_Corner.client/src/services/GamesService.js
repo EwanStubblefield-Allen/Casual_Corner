@@ -57,6 +57,16 @@ class GamesService {
     AppState.savedGames = AppState.savedGames.filter((s) => s.id != gameId)
     return new Game(res.data)
   }
+
+  getColors(score) {
+    if (score >= 75) {
+      return { color: '#66CC33', backgroundColor: '#66CC3330' }
+    } else if (score >= 50) {
+      return { color: '#FFCC33', backgroundColor: '#FFCC3330' }
+    } else {
+      return { color: '#FF0000', backgroundColor: '#FF000030' }
+    }
+  }
 }
 
 export const gamesService = new GamesService()
